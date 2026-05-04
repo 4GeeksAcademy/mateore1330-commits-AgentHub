@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - AgentHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="antialiased bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300">
+    <div class="flex h-screen overflow-hidden" id="appContainer">
+        <!-- SIDEBAR -->
+        <nav class="w-64 bg-gray-100 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <h1 class="text-2xl font-bold text-blue-600">AgentHub</h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Panel de Administración</p>
+            </div>
+
+            <ul class="flex-1 overflow-y-auto p-4 space-y-2">
+                <li><a href="#dashboard" class="nav-link block px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors active">📊 Dashboard</a></li>
+                <li><a href="#usuarios" class="nav-link block px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">👥 Gestión de Usuarios</a></li>
+                <li><a href="#agentes" class="nav-link block px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">🤖 Gestión de Agentes</a></li>
+                <li><a href="#skills" class="nav-link block px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">⚙️ Catálogo de Skills</a></li>
+                <li><a href="#contratos" class="nav-link block px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">📋 Contrataciones</a></li>
+                <li><a href="#errores" class="nav-link block px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">⚠️ Log de Errores</a></li>
+            </ul>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <p class="text-xs text-gray-500 dark:text-gray-400">© 2026 AgentHub</p>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- HEADER -->
+            <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex justify-between items-center">
+                <h2 id="sectionTitle" class="text-2xl font-bold">Dashboard</h2>
+                <div class="flex items-center gap-4">
+                    <button id="darkModeToggle" class="p-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition-colors">
+                        <span id="darkModeIcon">🌙</span>
+                    </button>
+                    <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">AD</div>
+                </div>
+            </header>
+
+            <!-- CONTENT AREA -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- DASHBOARD SECTION -->
+                <section id="dashboard" class="section space-y-6">
+                    <h2 class="text-3xl font-bold mb-6">Dashboard</h2>
+
+                    <!-- METRIC CARDS -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-blue-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm font-medium">Ingresos</p>
+                                    <p class="text-3xl font-bold mt-2">$45,230</p>
+                                </div>
+                                <div class="text-4xl text-blue-500">💰</div>
+                            </div>
+                            <p class="text-xs text-green-600 mt-4">+12% vs mes anterior</p>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-red-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm font-medium">Pérdida por Descuentos</p>
+                                    <p class="text-3xl font-bold mt-2">$3,450</p>
+                                </div>
+                                <div class="text-4xl text-red-500">📉</div>
+                            </div>
+                            <p class="text-xs text-red-600 mt-4">-5% vs mes anterior</p>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-green-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm font-medium">Agentes Activos</p>
+                                    <p class="text-3xl font-bold mt-2">128</p>
+                                </div>
+                                <div class="text-4xl text-green-500">✅</div>
+                            </div>
+                            <p class="text-xs text-green-600 mt-4">+8 vs mes anterior</p>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-amber-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm font-medium">Agentes Fallando</p>
+                                    <p class="text-3xl font-bold mt-2">5</p>
+                                </div>
+                                <div class="text-4xl text-amber-500">⚠️</div>
+                            </div>
+                            <p class="text-xs text-amber-600 mt-4">-2 vs semana anterior</p>
+                        </div>
+                    </div>
+
+                    <!-- CHART PLACEHOLDER -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-8 border-2 border-dashed border-gray-300 dark:border-gray-600">
+                        <div class="h-64 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-3xl mb-2">📈</p>
+                                <p class="text-gray-600 dark:text-gray-400 font-medium">Gráfico de Actividad Semanal</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-500">Visualización de datos de esta semana</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- USUARIOS SECTION -->
+                <section id="usuarios" class="section hidden space-y-6">
+                    <h2 class="text-3xl font-bold mb-6">Gestión de Usuarios</h2>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md">
+                        <table class="w-full">
+                            <thead class="bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Nombre</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Email</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Plan</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Estado</th>
+                                    <th class="px-6 py-3 text-center text-sm font-semibold">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Juan García</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">juan@empresa.com</td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">Pro</span></td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">María López</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">maria@startup.io</td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium">Enterprise</span></td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Carlos Rodríguez</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">carlos@tech.com</td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Básico</span></td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Ana Martínez</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">ana@innovate.es</td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">Pro</span></td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-full text-xs font-medium">Suspendido</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Pedro González</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">pedro@solutions.com</td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium">Enterprise</span></td>
+                                    <td class="px-6 py-4"><span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- AGENTES SECTION -->
+                <section id="agentes" class="section hidden space-y-6">
+                    <h2 class="text-3xl font-bold mb-6">Gestión de Agentes</h2>
+
+                    <div class="space-y-4">
+                        <!-- Agent: Asistente de Ventas -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold">Asistente de Ventas</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Propietario: Tech Solutions Inc.</p>
+                                    <div class="flex gap-2 mt-3">
+                                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span>
+                                    </div>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="config-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Configurar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="collapse-toggle mt-4 text-blue-600 dark:text-blue-400 text-sm font-medium flex items-center gap-1">
+                                <span class="collapse-icon">▶</span> Mostrar Skills
+                            </button>
+
+                            <div class="skills-container hidden mt-4 pl-4 space-y-2">
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Análisis de Clientes</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Recomendaciones de Producto</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Seguimiento de Pedidos</div>
+                            </div>
+                        </div>
+
+                        <!-- Agent: Soporte al Cliente -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold">Soporte al Cliente</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Propietario: Customer Success Ltd.</p>
+                                    <div class="flex gap-2 mt-3">
+                                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span>
+                                    </div>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="config-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Configurar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="collapse-toggle mt-4 text-blue-600 dark:text-blue-400 text-sm font-medium flex items-center gap-1">
+                                <span class="collapse-icon">▶</span> Mostrar Skills
+                            </button>
+
+                            <div class="skills-container hidden mt-4 pl-4 space-y-2">
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Resolución de Tickets</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• FAQ Automático</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Escalado a Agente Humano</div>
+                            </div>
+                        </div>
+
+                        <!-- Agent: Gestor de Contenido -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold">Gestor de Contenido</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Propietario: Digital Marketing Co.</p>
+                                    <div class="flex gap-2 mt-3">
+                                        <span class="px-3 py-1 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-full text-xs font-medium">Fallando</span>
+                                    </div>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="config-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Configurar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="collapse-toggle mt-4 text-blue-600 dark:text-blue-400 text-sm font-medium flex items-center gap-1">
+                                <span class="collapse-icon">▶</span> Mostrar Skills
+                            </button>
+
+                            <div class="skills-container hidden mt-4 pl-4 space-y-2">
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Generación de Textos</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• SEO Optimization</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Publicación en Redes</div>
+                            </div>
+                        </div>
+
+                        <!-- Agent: Asistente de RRHH -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold">Asistente de RRHH</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Propietario: HR Solutions Inc.</p>
+                                    <div class="flex gap-2 mt-3">
+                                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">Activo</span>
+                                    </div>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="config-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Configurar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="collapse-toggle mt-4 text-blue-600 dark:text-blue-400 text-sm font-medium flex items-center gap-1">
+                                <span class="collapse-icon">▶</span> Mostrar Skills
+                            </button>
+
+                            <div class="skills-container hidden mt-4 pl-4 space-y-2">
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Screening de Candidatos</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Planificación de Recursos</div>
+                                <div class="px-3 py-2 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded text-sm">• Gestión Administrativa</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SKILLS SECTION -->
+                <section id="skills" class="section hidden space-y-6">
+                    <h2 class="text-3xl font-bold mb-6">Catálogo de Skills</h2>
+
+                    <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+                        <p class="text-blue-900 dark:text-blue-300 text-sm">
+                            <strong>¿Qué es una Skill?</strong> En AgentHub, una skill es una capacidad específica que puede ser agregada a un agente de IA. Cada skill proporciona funcionalidad especializada que mejora las capacidades del agente, permitiendo realizar tareas más complejas y específicas del dominio. Los clientes pueden contratar agentes con diferentes combinaciones de skills según sus necesidades.
+                        </p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md">
+                        <table class="w-full">
+                            <thead class="bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Skill</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Descripción</th>
+                                    <th class="px-6 py-3 text-center text-sm font-semibold">Agentes Usando</th>
+                                    <th class="px-6 py-3 text-center text-sm font-semibold">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4 font-medium">Análisis de Clientes</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Análisis profundo del comportamiento y perfiles de clientes</td>
+                                    <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">3</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4 font-medium">Resolución de Tickets</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Procesamiento automático y categorización de tickets de soporte</td>
+                                    <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">5</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4 font-medium">Generación de Textos</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Creación de contenido original y personalizado</td>
+                                    <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">4</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4 font-medium">Screening de Candidatos</td>
+                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-400">Evaluación automática de CVs y selección inicial de candidatos</td>
+                                    <td class="px-6 py-4 text-center"><span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">2</span></td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="view-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                                <button class="delete-btn w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- CONTRATOS SECTION -->
+                <section id="contratos" class="section hidden space-y-6">
+                    <h2 class="text-3xl font-bold mb-6">Contrataciones de Agentes</h2>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Cliente</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Agente</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Skills</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Fecha Inicio</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold">Importe Total</th>
+                                    <th class="px-6 py-3 text-center text-sm font-semibold">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Tech Solutions Inc.</td>
+                                    <td class="px-6 py-4">Asistente de Ventas</td>
+                                    <td class="px-6 py-4">3 skills</td>
+                                    <td class="px-6 py-4">01/03/2026</td>
+                                    <td class="px-6 py-4 font-semibold">$9,999</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="contract-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Customer Success Ltd.</td>
+                                    <td class="px-6 py-4">Soporte al Cliente</td>
+                                    <td class="px-6 py-4">3 skills</td>
+                                    <td class="px-6 py-4">15/01/2026</td>
+                                    <td class="px-6 py-4 font-semibold">$14,999</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="contract-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Digital Marketing Co.</td>
+                                    <td class="px-6 py-4">Gestor de Contenido</td>
+                                    <td class="px-6 py-4">3 skills</td>
+                                    <td class="px-6 py-4">20/02/2026</td>
+                                    <td class="px-6 py-4 font-semibold">$7,499</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="contract-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">HR Solutions Inc.</td>
+                                    <td class="px-6 py-4">Asistente de RRHH</td>
+                                    <td class="px-6 py-4">3 skills</td>
+                                    <td class="px-6 py-4">10/02/2026</td>
+                                    <td class="px-6 py-4 font-semibold">$8,999</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="contract-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4">Tech Solutions Inc.</td>
+                                    <td class="px-6 py-4">Soporte al Cliente</td>
+                                    <td class="px-6 py-4">3 skills</td>
+                                    <td class="px-6 py-4">05/03/2026</td>
+                                    <td class="px-6 py-4 font-semibold">$12,499</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <div class="relative dropdown-container">
+                                            <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                            <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                                <button class="contract-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ERRORES SECTION -->
+                <section id="errores" class="section hidden space-y-6">
+                    <h2 class="text-3xl font-bold mb-6">Log de Errores</h2>
+
+                    <div class="space-y-4">
+                        <!-- Error 1 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow border-l-4 border-red-500">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex gap-2 items-center">
+                                        <span class="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded text-xs font-semibold">CRÍTICO</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">2026-05-04 14:32:15</span>
+                                    </div>
+                                    <p class="font-medium mt-2">Asistente de Ventas - Error de Conexión</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Timeout al conectar con base de datos principal</p>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="error-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                        <button class="resolve-btn w-full text-left px-4 py-2 text-sm text-green-600 dark:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Marcar resuelto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error 2 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow border-l-4 border-orange-500">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex gap-2 items-center">
+                                        <span class="px-2 py-1 bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded text-xs font-semibold">ADVERTENCIA</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">2026-05-04 13:15:42</span>
+                                    </div>
+                                    <p class="font-medium mt-2">Soporte al Cliente - Uso Alto de Memoria</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Consumo de memoria superior al 85% durante la última hora</p>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="error-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                        <button class="resolve-btn w-full text-left px-4 py-2 text-sm text-green-600 dark:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Marcar resuelto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error 3 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow border-l-4 border-red-500">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex gap-2 items-center">
+                                        <span class="px-2 py-1 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded text-xs font-semibold">CRÍTICO</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">2026-05-04 11:28:09</span>
+                                    </div>
+                                    <p class="font-medium mt-2">Gestor de Contenido - Fallo de Procesamiento</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Error en el análisis de contenido: modelo no respondiendo</p>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="error-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                        <button class="resolve-btn w-full text-left px-4 py-2 text-sm text-green-600 dark:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Marcar resuelto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error 4 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow border-l-4 border-yellow-500">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex gap-2 items-center">
+                                        <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded text-xs font-semibold">INFORMACIÓN</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">2026-05-03 22:15:33</span>
+                                    </div>
+                                    <p class="font-medium mt-2">Asistente de RRHH - Mantenimiento Completado</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Actualización de componentes realizada exitosamente</p>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="error-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                        <button class="resolve-btn w-full text-left px-4 py-2 text-sm text-green-600 dark:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Marcar resuelto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error 5 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow border-l-4 border-orange-500">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex gap-2 items-center">
+                                        <span class="px-2 py-1 bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 rounded text-xs font-semibold">ADVERTENCIA</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">2026-05-03 19:42:18</span>
+                                    </div>
+                                    <p class="font-medium mt-2">Asistente de Ventas - Latencia Elevada</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Tiempo de respuesta promedio: 2.3s (objetivo: <1s)</p>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="error-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                        <button class="resolve-btn w-full text-left px-4 py-2 text-sm text-green-600 dark:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Marcar resuelto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error 6 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow border-l-4 border-yellow-500">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1">
+                                    <div class="flex gap-2 items-center">
+                                        <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded text-xs font-semibold">INFORMACIÓN</span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">2026-05-03 16:55:42</span>
+                                    </div>
+                                    <p class="font-medium mt-2">Soporte al Cliente - Sincronización Completada</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Base de datos sincronizada con éxito: 15,200 registros</p>
+                                </div>
+                                <div class="relative dropdown-container">
+                                    <button class="dropdown-toggle px-3 py-1 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">⋮</button>
+                                    <div class="dropdown-menu hidden absolute right-0 mt-1 w-40 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                                        <button class="error-detail-btn w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600">Ver detalle</button>
+                                        <button class="resolve-btn w-full text-left px-4 py-2 text-sm text-green-600 dark:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-600 border-t border-gray-200 dark:border-gray-600">Marcar resuelto</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <!-- User Detail Modal -->
+    <div id="userDetailModal" class="modal hidden fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4 shadow-xl">
+            <h3 class="text-2xl font-bold mb-4">Detalle de Usuario</h3>
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Nombre:</p>
+                    <p id="modalUserName" class="font-medium">-</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Email:</p>
+                    <p id="modalUserEmail" class="font-medium">-</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Plan:</p>
+                    <p id="modalUserPlan" class="font-medium">-</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Estado:</p>
+                    <p id="modalUserStatus" class="font-medium">-</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Fecha de Registro:</p>
+                    <p class="font-medium">25/01/2024</p>
+                </div>
+            </div>
+            <div class="mt-6 flex gap-2">
+                <button class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors close-modal">Cerrar</button>
+                <button class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">Editar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config Modal -->
+    <div id="configModal" class="modal hidden fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl mx-4 shadow-xl">
+            <h3 class="text-2xl font-bold mb-4">Configurar Agent</h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 dark:text-gray-300 font-medium mb-2">System Prompt:</label>
+                    <textarea class="w-full h-32 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ingresa instrucciones del sistema...">You are a helpful AI assistant designed to help customers with their sales inquiries...</textarea>
+                </div>
+            </div>
+            <div class="mt-6 flex gap-2">
+                <button class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors close-modal">Cancelar</button>
+                <button class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contract Detail Modal -->
+    <div id="contractDetailModal" class="modal hidden fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4 shadow-xl">
+            <h3 class="text-2xl font-bold mb-4">Desglose de Contrato</h3>
+            <div class="space-y-3 mb-6">
+                <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                    <span class="text-gray-600 dark:text-gray-400">Análisis de Clientes</span>
+                    <span class="font-semibold">$3,333</span>
+                </div>
+                <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                    <span class="text-gray-600 dark:text-gray-400">Recomendaciones de Producto</span>
+                    <span class="font-semibold">$3,333</span>
+                </div>
+                <div class="flex justify-between pb-2 border-b border-gray-200 dark:border-gray-700">
+                    <span class="text-gray-600 dark:text-gray-400">Seguimiento de Pedidos</span>
+                    <span class="font-semibold">$3,333</span>
+                </div>
+                <div class="flex justify-between pt-2 font-bold text-lg">
+                    <span>Total:</span>
+                    <span>$9,999</span>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors close-modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Detail Modal -->
+    <div id="errorDetailModal" class="modal hidden fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-2xl mx-4 shadow-xl max-h-96 overflow-y-auto">
+            <h3 class="text-2xl font-bold mb-4">Detalle del Error - Stack Trace</h3>
+            <div class="bg-gray-900 font-mono text-green-400 p-4 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap break-words">
+Error: Database Connection Timeout
+at connectDatabase (db.js:45:23)
+at AgentVentas.initialize (agent.js:78:15)
+at main.js:12:5
+    at process._tickCallback (internal/timers.js:215:0)
+
+Timestamp: 2026-05-04T14:32:15.235Z
+Agent ID: agent_sales_001
+Request ID: req_98765432
+Duration: 5234ms (timeout at 5000ms)
+            </div>
+            <div class="mt-6 flex gap-2">
+                <button class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors close-modal">Cerrar</button>
+                <button class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors">Reportar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay (backdrop click) -->
+    <script>
+        // ===== DARK MODE TOGGLE =====
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const htmlElement = document.documentElement;
+        const darkModeIcon = document.getElementById('darkModeIcon');
+
+        // Función para actualizar los estilos visuales del botón y icono
+        function updateDarkModeButton() {
+            const isDark = htmlElement.classList.contains('dark');
+            darkModeIcon.textContent = isDark ? '☀️' : '🌙';
+            
+            if (isDark) {
+                darkModeToggle.classList.remove('bg-gray-200');
+                darkModeToggle.classList.add('bg-gray-700');
+            } else {
+                darkModeToggle.classList.remove('bg-gray-700');
+                darkModeToggle.classList.add('bg-gray-200');
+            }
+        }
+
+        // Inicializar modo oscuro al cargar la página
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'true') {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+        updateDarkModeButton();
+
+        // Evento del botón para alternar modo oscuro/claro
+        darkModeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            htmlElement.classList.toggle('dark');
+            const isDarkNow = htmlElement.classList.contains('dark');
+            localStorage.setItem('darkMode', isDarkNow.toString());
+            updateDarkModeButton();
+        });
+
+        // Section Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section');
+        const sectionTitle = document.getElementById('sectionTitle');
+
+        const sectionTitles = {
+            'dashboard': 'Dashboard',
+            'usuarios': 'Gestión de Usuarios',
+            'agentes': 'Gestión de Agentes',
+            'skills': 'Catálogo de Skills',
+            'contratos': 'Contrataciones de Agentes',
+            'errores': 'Log de Errores'
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+
+                navLinks.forEach(l => l.classList.remove('active', 'bg-blue-100', 'dark:bg-blue-900'));
+                link.classList.add('active', 'bg-blue-100', 'dark:bg-blue-900');
+
+                sections.forEach(section => section.classList.add('hidden'));
+                document.getElementById(targetId).classList.remove('hidden');
+
+                sectionTitle.textContent = sectionTitles[targetId] || targetId;
+            });
+        });
+
+        // Dropdown Menus
+        const dropdownContainers = document.querySelectorAll('.dropdown-container');
+
+        dropdownContainers.forEach(container => {
+            const toggle = container.querySelector('.dropdown-toggle');
+            const menu = container.querySelector('.dropdown-menu');
+
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Collapsible Skills
+        const collapseToggles = document.querySelectorAll('.collapse-toggle');
+
+        collapseToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const container = toggle.parentElement.querySelector('.skills-container');
+                const icon = toggle.querySelector('.collapse-icon');
+                container.classList.toggle('hidden');
+                icon.textContent = container.classList.contains('hidden') ? '▶' : '▼';
+                toggle.textContent = container.classList.contains('hidden') ? '▶ Mostrar Skills' : '▼ Ocultar Skills';
+            });
+        });
+
+        // Modals
+        const modals = document.querySelectorAll('.modal');
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Close modal buttons
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.target.closest('.modal').classList.add('hidden');
+            });
+        });
+
+        // Close modal on backdrop click
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+
+        // User Detail Modal
+        document.querySelectorAll('.view-detail-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const row = btn.closest('tr');
+                if (row) {
+                    const name = row.querySelector('td:first-child').textContent;
+                    const email = row.querySelector('td:nth-child(2)').textContent;
+                    const plan = row.querySelector('td:nth-child(3)').textContent.trim();
+                    const status = row.querySelector('td:nth-child(4)').textContent.trim();
+
+                    document.getElementById('modalUserName').textContent = name;
+                    document.getElementById('modalUserEmail').textContent = email;
+                    document.getElementById('modalUserPlan').textContent = plan;
+                    document.getElementById('modalUserStatus').textContent = status;
+
+                    openModal('userDetailModal');
+                }
+            });
+        });
+
+        // Config Modal
+        document.querySelectorAll('.config-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                openModal('configModal');
+            });
+        });
+
+        // Contract Detail Modal
+        document.querySelectorAll('.contract-detail-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                openModal('contractDetailModal');
+            });
+        });
+
+        // Error Detail Modal
+        document.querySelectorAll('.error-detail-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                openModal('errorDetailModal');
+            });
+        });
+
+        // Delete and Resolve Actions
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Registro eliminado correctamente');
+            });
+        });
+
+        document.querySelectorAll('.resolve-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('Error marcado como resuelto');
+            });
+        });
+    </script>
+</body>
+</html>
