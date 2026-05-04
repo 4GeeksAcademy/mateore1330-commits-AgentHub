@@ -45,13 +45,15 @@
 
 ---
 
-## 4. Inventario de Componentes UI
+## 4. Tarea
+Construye un dashboard funcional para el panel de administración para AgenHub
+### 4.1 Inventario de Componentes UI
 *   **Sidebar:** Navegación lateral persistente con enlaces a las 6 secciones.
 *   **Modo Oscuro:** Toggle en la barra superior que cambia todo el panel y persiste entre secciones.
 *   **Dropdowns:** Menús de acción que se cierran al hacer clic fuera de ellos.
 *   **Modales:** Overlays con cierre mediante botón y clic en el área sombreada (backdrop).
 
-## 5. Salida esperada
+### 4.2 Salida esperada
 1.  **Interactividad:** Todos los dropdowns, modales y colapsables deben ser funcionales con JS Vanilla.
 2.  **Responsividad:** El layout debe ser mobile first y usable en resoluciones de escritorio y tablet.
 3.  **Consistencia de Datos:** El mismo nombre de agente debe aparecer en Gestión, Contrataciones y Logs.
